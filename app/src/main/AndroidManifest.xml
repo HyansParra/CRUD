@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplicationsss">
 
-        <!-- Actividad principal -->
+        <!-- Actividad de Inicio -->
         <activity
-            android:name=".MainActivity"
+            android:name=".Inicio"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,29 +22,30 @@
             </intent-filter>
         </activity>
 
+        <!-- Actividad principal -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+
         <!-- Actividad de Usuario -->
         <activity
             android:name=".UsuarioActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
 
-        <!-- Actividad del CRUD de Usuario -->
+        <!-- CRUD de Usuario -->
         <activity
             android:name=".UsuarioCrudActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
 
         <!-- Actividad de Catálogo -->
         <activity
             android:name=".CatalogoActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
 
-        <!-- Actividad del CRUD del Catálogo -->
+        <!-- CRUD de Catálogo -->
         <activity
             android:name=".CatalogoCrudActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
 
     </application>
 
