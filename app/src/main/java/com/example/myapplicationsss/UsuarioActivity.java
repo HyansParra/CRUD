@@ -14,18 +14,13 @@ public class UsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.usuario);
 
-        // Botón volver
+        // Botón volver → ahora solo cierra la actividad actual
         Button btnVolver = findViewById(R.id.btnVolver);
-        btnVolver.setOnClickListener(v -> {
-            Intent intent = new Intent(UsuarioActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        });
+        btnVolver.setOnClickListener(v -> finish());
 
-        // Botón logout
+        // Botón logout → vuelve al MainActivity
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> {
-            // Aquí puedes poner la lógica de cierre de sesión
             Intent intent = new Intent(UsuarioActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -43,7 +38,7 @@ public class UsuarioActivity extends AppCompatActivity {
         });
 
         navQR.setOnClickListener(v -> {
-            // Aquí puedes implementar la lógica de escanear QR
+            // Aquí puedes implementar la lógica de escanear QR si deseas
         });
 
         navUser.setOnClickListener(v -> {
