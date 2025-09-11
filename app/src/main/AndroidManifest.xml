@@ -28,6 +28,12 @@
             android:exported="true">
         </activity>
 
+        <!-- Actividad del CRUD de Usuario -->
+        <activity
+            android:name=".UsuarioCrudActivity"
+            android:exported="true">
+        </activity>
+
         <!-- Actividad de Catálogo -->
         <activity
             android:name=".CatalogoActivity"

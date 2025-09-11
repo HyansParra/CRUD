@@ -12,8 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="52dp"
         android:backgroundTint="#795548"
         android:text="Volver"
         android:textColor="#FFFFFF"
@@ -196,11 +194,22 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Botón de logout -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Cerrar sesión" />
+
+            <!-- Botón para abrir CRUD debajo de cerrar sesión -->
+            <Button
+                android:id="@+id/btnAbrirCrud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ir a CRUD"
+                android:backgroundTint="#6F4E37"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="16dp" />
 
             <TextView
                 android:layout_width="match_parent"

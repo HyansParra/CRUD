@@ -3,46 +3,39 @@ package com.example.myapplicationsss;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.LinearLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.button.MaterialButton;
 
 public class UsuarioActivity extends AppCompatActivity {
+
+    private Button btnAbrirCrud;
+    private MaterialButton btnLogout;
+    private Button btnVolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.usuario);
 
-        // Botón volver → ahora solo cierra la actividad actual
-        Button btnVolver = findViewById(R.id.btnVolver);
-        btnVolver.setOnClickListener(v -> finish());
+        // Referencias
+        btnAbrirCrud = findViewById(R.id.btnAbrirCrud);
+        btnLogout = findViewById(R.id.btnLogout);
+        btnVolver = findViewById(R.id.btnVolver);
 
-        // Botón logout → vuelve al MainActivity
-        Button btnLogout = findViewById(R.id.btnLogout);
+        // Botón para abrir UsuarioCrudActivity
+        btnAbrirCrud.setOnClickListener(v -> {
+            Intent intent = new Intent(UsuarioActivity.this, UsuarioCrudActivity.class);
+            startActivity(intent);
+        });
+
+        // Botón Cerrar sesión (solo ejemplo)
         btnLogout.setOnClickListener(v -> {
-            Intent intent = new Intent(UsuarioActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            finish(); // cierra la actividad actual
         });
 
-        // Navegación inferior
-        LinearLayout navCoffee = findViewById(R.id.navCoffee);
-        LinearLayout navQR = findViewById(R.id.navQR);
-        LinearLayout navUser = findViewById(R.id.navUser);
-
-        navCoffee.setOnClickListener(v -> {
-            Intent intent = new Intent(UsuarioActivity.this, CatalogoActivity.class);
-            startActivity(intent);
-            finish();
-        });
-
-        navQR.setOnClickListener(v -> {
-            // Aquí puedes implementar la lógica de escanear QR si deseas
-        });
-
-        navUser.setOnClickListener(v -> {
-            // Ya estamos en UsuarioActivity → no hacemos nada
+        // Botón Volver (solo ejemplo)
+        btnVolver.setOnClickListener(v -> {
+            finish(); // cierra la actividad actual
         });
     }
 }
