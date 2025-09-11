@@ -29,6 +29,13 @@ public class CatalogoActivity extends AppCompatActivity {
         Button btnVolver = findViewById(R.id.btnVolver);
         btnVolver.setOnClickListener(v -> finish());
 
+        // Botón para abrir el CRUD
+        Button btnCatalogoCRUD = findViewById(R.id.btnCatalogoCRUD);
+        btnCatalogoCRUD.setOnClickListener(v -> {
+            Intent intent = new Intent(CatalogoActivity.this, CatalogoCrudActivity.class);
+            startActivity(intent);
+        });
+
         // Navegación inferior
         LinearLayout navCoffee = findViewById(R.id.navCoffee);
         LinearLayout navQR = findViewById(R.id.navQR);

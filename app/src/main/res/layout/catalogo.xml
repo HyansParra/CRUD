@@ -22,19 +22,21 @@
     <!-- Título -->
     <TextView
         android:id="@+id/tvTitulo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Catálogo de Cafés"
         android:textColor="#6F4E37"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/btnVolver"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Contenido con scroll -->
     <ScrollView
+        android:id="@+id/scrollMain"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/tvTitulo"
@@ -255,6 +257,16 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Botón CRUD al final -->
+            <Button
+                android:id="@+id/btnCatalogoCRUD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ir a CRUD"
+                android:backgroundTint="#6F4E37"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"/>
         </LinearLayout>
     </ScrollView>
 
