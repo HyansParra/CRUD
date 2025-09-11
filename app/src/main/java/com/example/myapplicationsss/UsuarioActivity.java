@@ -1,26 +1,53 @@
 package com.example.myapplicationsss;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class UsuarioActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this); // Habilitar EdgeToEdge
-        setContentView(R.layout.usuario); // Usar el layout usuario.xml
+        setContentView(R.layout.usuario);
 
-        // Ajustar Insets para que no se superponga con barras del sistema
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        // Botón volver
+        Button btnVolver = findViewById(R.id.btnVolver);
+        btnVolver.setOnClickListener(v -> {
+            Intent intent = new Intent(UsuarioActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        // Botón logout
+        Button btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(v -> {
+            // Aquí puedes poner la lógica de cierre de sesión
+            Intent intent = new Intent(UsuarioActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        // Navegación inferior
+        LinearLayout navCoffee = findViewById(R.id.navCoffee);
+        LinearLayout navQR = findViewById(R.id.navQR);
+        LinearLayout navUser = findViewById(R.id.navUser);
+
+        navCoffee.setOnClickListener(v -> {
+            Intent intent = new Intent(UsuarioActivity.this, CatalogoActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        navQR.setOnClickListener(v -> {
+            // Aquí puedes implementar la lógica de escanear QR
+        });
+
+        navUser.setOnClickListener(v -> {
+            // Ya estamos en UsuarioActivity → no hacemos nada
         });
     }
 }

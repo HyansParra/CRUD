@@ -18,17 +18,31 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Ajuste de Insets para EdgeToEdge
+        // Ajustar bordes con EdgeToEdge
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Configurar botón USUARIO en la barra de navegación
+        // Botones inferiores
+        Button btnCatalogo = findViewById(R.id.btnCatalogo);
+        Button btnEscanearQR = findViewById(R.id.btnEscanearQR);
         Button btnUsuario = findViewById(R.id.btnUsuario);
-        btnUsuario.setOnClickListener(view -> {
-            // Abrir la actividad de usuario
+
+        // Ir a Catálogo
+        btnCatalogo.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CatalogoActivity.class);
+            startActivity(intent);
+        });
+
+        // Escanear QR (por ahora no implementado)
+        btnEscanearQR.setOnClickListener(v -> {
+            // Aquí puedes implementar la lógica para escanear QR más adelante
+        });
+
+        // Ir a Usuario
+        btnUsuario.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, UsuarioActivity.class);
             startActivity(intent);
         });

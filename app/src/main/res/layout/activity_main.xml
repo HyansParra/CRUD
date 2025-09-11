@@ -2,14 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5EFE6"
-    tools:context=".MainActivity">
+    android:background="#F5EFE6">
 
-    <!-- Título principal -->
     <TextView
         android:id="@+id/tvLogo"
         android:layout_width="wrap_content"
@@ -23,7 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Mensaje de bienvenida -->
     <TextView
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
@@ -36,7 +32,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Barra de navegación inferior -->
     <LinearLayout
         android:id="@+id/bottomNavBar"
         android:layout_width="0dp"
@@ -46,9 +41,9 @@
         android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:weightSum="3">
 
-        <!-- Botón Catálogo -->
         <Button
             android:id="@+id/btnCatalogo"
             android:layout_width="0dp"
@@ -59,22 +54,16 @@
             android:background="?android:attr/selectableItemBackground"
             android:textSize="12sp" />
 
-        <!-- Botón Escanear QR -->
         <Button
             android:id="@+id/btnEscanearQR"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.2"
+            android:layout_weight="1"
             android:text="ESCANEAR QR"
             android:textColor="#FFFFFF"
-            android:backgroundTint="#6F4E37"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:textSize="14sp" />
+            android:background="?android:attr/selectableItemBackground"
+            android:textSize="12sp" />
 
-        <!-- Botón Usuario -->
         <Button
             android:id="@+id/btnUsuario"
             android:layout_width="0dp"
@@ -84,7 +73,6 @@
             android:textColor="#FFFFFF"
             android:background="?android:attr/selectableItemBackground"
             android:textSize="12sp" />
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
