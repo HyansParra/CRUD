@@ -47,6 +47,11 @@
             android:name=".CatalogoCrudActivity"
             android:exported="true" />
 
+        <!-- Actividad de QR -->
+        <activity
+            android:name=".QRActivity"
+            android:exported="true" />
+
     </application>
 
 </manifest>

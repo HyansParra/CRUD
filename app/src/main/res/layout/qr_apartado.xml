@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="#F5EFE6">
+
+    <TextView
+        android:id="@+id/tvQRTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sección QR"
+        android:textSize="24sp"
+        android:textColor="#6F4E37"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnEscanear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Escanear QR"
+        android:textColor="#FFFFFF"
+        android:background="#795548"
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp"
+        android:padding="12dp"/>
+
+    <Button
+        android:id="@+id/btnGenerar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Generar QR"
+        android:textColor="#FFFFFF"
+        android:background="#6F4E37"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:layout_marginBottom="20dp"/>
+
+    <ImageView
+        android:id="@+id/ivQR"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:padding="8dp"/>
+</LinearLayout>
