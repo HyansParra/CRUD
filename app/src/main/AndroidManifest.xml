@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplicationsss">
 
-        <!-- Actividad de Inicio -->
+        <!-- Actividad de Inicio (launcher) -->
         <activity
             android:name=".Inicio"
             android:exported="true">
@@ -22,37 +22,15 @@
             </intent-filter>
         </activity>
 
-        <!-- Actividad principal -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" />
-
-        <!-- Actividad de Usuario -->
-        <activity
-            android:name=".UsuarioActivity"
-            android:exported="true" />
-
-        <!-- CRUD de Usuario -->
-        <activity
-            android:name=".UsuarioCrudActivity"
-            android:exported="true" />
-
-        <!-- Actividad de Catálogo -->
-        <activity
-            android:name=".CatalogoActivity"
-            android:exported="true" />
-
-        <!-- CRUD de Catálogo -->
-        <activity
-            android:name=".CatalogoCrudActivity"
-            android:exported="true" />
-
-        <!-- Actividad de QR -->
-        <activity
-            android:name=".QRActivity"
-            android:exported="true" />
-
-        <activity android:name=".ReglasActivity" />
+        <!-- Actividades principales -->
+        <activity android:name=".MainActivity" android:exported="true" />
+        <activity android:name=".UsuarioActivity" android:exported="true" />
+        <activity android:name=".UsuarioCrudActivity" android:exported="true" />
+        <activity android:name=".CatalogoActivity" android:exported="true" />
+        <activity android:name=".CatalogoCrudActivity" android:exported="true" />
+        <activity android:name=".QRActivity" android:exported="true" />
+        <activity android:name=".ReglasActivity" android:exported="true" />
+        <activity android:name=".BeneficiosActivity" android:exported="true" />
 
     </application>
 
