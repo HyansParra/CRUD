@@ -1,12 +1,15 @@
 package com.example.myapplicationsss;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast; // <- Import faltante
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat; // <- Import para colores
+
 import com.google.android.material.button.MaterialButton;
 
 public class UsuarioActivity extends AppCompatActivity {
@@ -64,7 +67,7 @@ public class UsuarioActivity extends AppCompatActivity {
     }
 
     private void agregarBotonAdmin(LinearLayout parent, String texto) {
-        Button boton = new Button(this);
+        MaterialButton boton = new MaterialButton(this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -72,12 +75,24 @@ public class UsuarioActivity extends AppCompatActivity {
         params.setMargins(0, 16, 0, 0);
         boton.setLayoutParams(params);
         boton.setText(texto);
-        boton.setTextColor(getResources().getColor(android.R.color.white));
-        // Cambio a color válido para evitar errores
-        boton.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_purple));
         boton.setAllCaps(false);
+        boton.setTextColor(Color.WHITE);
 
-        boton.setOnClickListener(v -> Toast.makeText(this, "Botón " + texto + " presionado", Toast.LENGTH_SHORT).show());
+        // Estilo similar a btnLogout
+        boton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#6F4E37"))); // Tono café
+        boton.setCornerRadius(12);
+        boton.setElevation(4f);
+
+        // Acción según el texto
+        boton.setOnClickListener(v -> {
+            if (texto.equals("REGLAS")) {
+                Intent intent = new Intent(UsuarioActivity.this, ReglasActivity.class);
+                startActivity(intent);
+            } else if (texto.equals("BENEFICIOS")) {
+                Intent intent = new Intent(UsuarioActivity.this, BeneficiosActivity.class);
+                startActivity(intent);
+            }
+        });
 
         parent.addView(boton);
     }

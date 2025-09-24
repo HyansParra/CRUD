@@ -52,6 +52,8 @@
             android:name=".QRActivity"
             android:exported="true" />
 
+        <activity android:name=".ReglasActivity" />
+
     </application>
 
 </manifest>
