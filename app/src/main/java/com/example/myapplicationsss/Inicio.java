@@ -35,11 +35,11 @@ public class Inicio extends AppCompatActivity {
         dbHelper = new SqlBasedeDatos(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // ✅ Insertar usuarios predeterminados si no existen
+        //  Insertar usuarios predeterminados si no existen
         insertarUsuarioSiNoExiste(db, "admin", "admin123", "administrador");
         insertarUsuarioSiNoExiste(db, "usuario", "usuario123", "normal");
 
-        // ✅ Cambiar entre login y registro
+        // Cambiar entre login y registro
         cbRegistrar.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 etConfirmarPassword.setVisibility(EditText.VISIBLE);
@@ -50,7 +50,7 @@ public class Inicio extends AppCompatActivity {
             }
         });
 
-        // ✅ Botón de acción
+        // Botón de acción
         btnAccion.setOnClickListener(view -> {
             String usuario = etUsuario.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
@@ -83,7 +83,7 @@ public class Inicio extends AppCompatActivity {
             }
         });
 
-        // ✅ Detectar deslizar hacia arriba para ir al login
+        //  Detectar deslizar hacia arriba para ir al login
         scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener)
                 (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                     if (scrollY > 200) { // Deslizó hacia abajo
