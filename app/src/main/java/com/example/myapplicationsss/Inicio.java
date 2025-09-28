@@ -29,6 +29,7 @@ public class Inicio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inicio);
 
+        // Referencias a UI
         etUsuario = findViewById(R.id.etUsuario);
         etPassword = findViewById(R.id.etPassword);
         etConfirmarPassword = findViewById(R.id.etConfirmarPassword);
@@ -38,7 +39,7 @@ public class Inicio extends AppCompatActivity {
         dbHelper = new SqlBasedeDatos(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // Insertar usuarios predeterminados
+        // Insertar usuarios predeterminados si no existen
         insertarUsuarioSiNoExiste(db, "admin", "admin123", "administrador");
         insertarUsuarioSiNoExiste(db, "usuario", "usuario123", "normal");
 
@@ -80,7 +81,7 @@ public class Inicio extends AppCompatActivity {
                 } else {
                     guardarUsuarioEnPrefs(usuario, tipoUsuario);
                     Toast.makeText(Inicio.this, "Bienvenido " + usuario, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Inicio.this, MainActivity.class);
+                    Intent intent = new Intent(Inicio.this, UsuarioActivity.class);
                     intent.putExtra("tipo_usuario", tipoUsuario);
                     intent.putExtra("nombre_usuario", usuario);
                     startActivity(intent);
@@ -90,6 +91,7 @@ public class Inicio extends AppCompatActivity {
         });
     }
 
+    // Guardar usuario en SharedPreferences
     private void guardarUsuarioEnPrefs(String nombre, String tipo) {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -98,6 +100,7 @@ public class Inicio extends AppCompatActivity {
         editor.apply();
     }
 
+    // Insertar usuario si no existe
     private void insertarUsuarioSiNoExiste(SQLiteDatabase db, String usuario, String password, String tipo) {
         Cursor cursor = db.rawQuery("SELECT * FROM Usuarios WHERE nombre=?", new String[]{usuario});
         if (cursor.getCount() == 0) {
@@ -115,6 +118,7 @@ public class Inicio extends AppCompatActivity {
         cursor.close();
     }
 
+    // Registrar usuario nuevo
     private void registrarUsuario(SQLiteDatabase db, String usuario, String password) {
         Cursor cursor = db.rawQuery("SELECT * FROM Usuarios WHERE nombre=?", new String[]{usuario});
         if (cursor.getCount() > 0) {
@@ -135,6 +139,7 @@ public class Inicio extends AppCompatActivity {
         cursor.close();
     }
 
+    // Verificar usuario y contraseña
     private String verificarUsuario(SQLiteDatabase db, String usuario, String password) {
         Cursor cursor = db.rawQuery(
                 "SELECT tipo FROM Usuarios WHERE nombre=? AND password=?",
