@@ -31,6 +31,8 @@
         <activity android:name=".QRActivity" android:exported="true" />
         <activity android:name=".ReglasActivity" android:exported="true" />
         <activity android:name=".BeneficiosActivity" android:exported="true" />
+        <activity android:name=".MiQRActivity" android:exported="true" />
+
 
     </application>
 

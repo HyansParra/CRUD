@@ -8,9 +8,13 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
 public class UsuarioCrudActivity extends AppCompatActivity {
@@ -33,19 +37,11 @@ public class UsuarioCrudActivity extends AppCompatActivity {
         Button btnEliminar = findViewById(R.id.btnEliminar);
         listUsuarios = findViewById(R.id.listUsuarios);
 
-        // Cargar usuarios
         cargarUsuarios();
 
-        // Volver
         btnVolver.setOnClickListener(v -> finish());
-
-        // Agregar usuario
         btnAgregar.setOnClickListener(v -> mostrarDialogoAgregar());
-
-        // Editar usuario
         btnEditar.setOnClickListener(v -> mostrarDialogoEditar());
-
-        // Eliminar usuario
         btnEliminar.setOnClickListener(v -> mostrarDialogoEliminar());
     }
 
@@ -53,13 +49,15 @@ public class UsuarioCrudActivity extends AppCompatActivity {
         listaUsuarios = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT idUsuario, nombre, email FROM Usuarios", null);
+        Cursor cursor = db.rawQuery("SELECT idUsuario, nombre, email, tipo, password FROM Usuarios", null);
         if (cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(0);
                 String nombre = cursor.getString(1);
                 String email = cursor.getString(2);
-                listaUsuarios.add(id + " - " + nombre + " (" + email + ")");
+                String tipo = cursor.getString(3);
+                String password = cursor.getString(4);
+                listaUsuarios.add(id + " - " + nombre + " (" + email + ") [" + tipo + "] - " + password);
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -75,15 +73,34 @@ public class UsuarioCrudActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Agregar Usuario");
 
-        final EditText inputNombre = new EditText(this);
-        inputNombre.setHint("Nombre");
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(40, 20, 40, 20);
 
-        builder.setView(inputNombre);
+        EditText inputNombre = new EditText(this);
+        inputNombre.setHint("Nombre");
+        layout.addView(inputNombre);
+
+        EditText inputPassword = new EditText(this);
+        inputPassword.setHint("Contraseña");
+        layout.addView(inputPassword);
+
+        Spinner spinnerRol = new Spinner(this);
+        ArrayAdapter<String> adapterRol = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item,
+                new String[]{"normal", "administrador"});
+        adapterRol.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRol.setAdapter(adapterRol);
+        layout.addView(spinnerRol);
+
+        builder.setView(layout);
 
         builder.setPositiveButton("Guardar", (dialog, which) -> {
             String nombre = inputNombre.getText().toString().trim();
+            String password = inputPassword.getText().toString().trim();
+            String rol = spinnerRol.getSelectedItem().toString();
 
-            if (!nombre.isEmpty()) {
+            if (!nombre.isEmpty() && !password.isEmpty()) {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
                 values.put("nombre", nombre);
@@ -91,12 +108,14 @@ public class UsuarioCrudActivity extends AppCompatActivity {
                 values.put("telefono", "000000000");
                 values.put("fecha_nac", "2000-01-01");
                 values.put("creado_en", String.valueOf(System.currentTimeMillis()));
-                values.put("password", "1234");
-                values.put("tipo", "normal");
+                values.put("password", password);
+                values.put("tipo", rol);
 
                 db.insert("Usuarios", null, values);
-                Toast.makeText(this, "Usuario agregado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Usuario agregado como " + rol, Toast.LENGTH_SHORT).show();
                 cargarUsuarios();
+            } else {
+                Toast.makeText(this, "Ingresa un nombre y contraseña válidos", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -117,21 +136,34 @@ public class UsuarioCrudActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Editar Usuario");
 
-        final EditText inputNombre = new EditText(this);
-        inputNombre.setHint("Nuevo nombre");
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(40, 20, 40, 20);
 
-        builder.setView(inputNombre);
+        EditText inputNombre = new EditText(this);
+        inputNombre.setHint("Nuevo nombre");
+        layout.addView(inputNombre);
+
+        EditText inputPassword = new EditText(this);
+        inputPassword.setHint("Nueva contraseña");
+        layout.addView(inputPassword);
+
+        builder.setView(layout);
 
         builder.setPositiveButton("Actualizar", (dialog, which) -> {
             String nuevoNombre = inputNombre.getText().toString().trim();
+            String nuevaPassword = inputPassword.getText().toString().trim();
 
-            if (!nuevoNombre.isEmpty()) {
+            if (!nuevoNombre.isEmpty() && !nuevaPassword.isEmpty()) {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
                 values.put("nombre", nuevoNombre);
+                values.put("password", nuevaPassword);
                 db.update("Usuarios", values, "idUsuario=?", new String[]{String.valueOf(id)});
                 Toast.makeText(this, "Usuario actualizado", Toast.LENGTH_SHORT).show();
                 cargarUsuarios();
+            } else {
+                Toast.makeText(this, "Ingresa un nombre y contraseña válidos", Toast.LENGTH_SHORT).show();
             }
         });
 

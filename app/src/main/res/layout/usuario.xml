@@ -198,13 +198,24 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Layout para botones extra admin -->
+            <!-- Layout para botones extra admin + MI QR -->
             <LinearLayout
                 android:id="@+id/layoutExtras"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp">
+
+                <!-- 🔹 Nuevo botón MI QR -->
+                <Button
+                    android:id="@+id/btnMiQR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="MI QR"
+                    android:backgroundTint="#6F4E37"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
 
             <!-- Botón de logout -->
             <com.google.android.material.button.MaterialButton

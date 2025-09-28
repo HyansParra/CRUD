@@ -2,6 +2,7 @@ package com.example.myapplicationsss;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -9,8 +10,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 
 public class Inicio extends AppCompatActivity {
 
@@ -18,7 +19,10 @@ public class Inicio extends AppCompatActivity {
     private Button btnAccion;
     private CheckBox cbRegistrar;
     private SqlBasedeDatos dbHelper;
-    private NestedScrollView scrollView;
+
+    private static final String PREFS_NAME = "cafefidelidad_prefs";
+    private static final String KEY_NOMBRE = "logged_name";
+    private static final String KEY_TIPO = "logged_tipo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +34,15 @@ public class Inicio extends AppCompatActivity {
         etConfirmarPassword = findViewById(R.id.etConfirmarPassword);
         btnAccion = findViewById(R.id.btnAccion);
         cbRegistrar = findViewById(R.id.cbRegistrar);
-        scrollView = findViewById(R.id.scrollView);
 
         dbHelper = new SqlBasedeDatos(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // ✅ Insertar usuarios predeterminados si no existen
+        // Insertar usuarios predeterminados
         insertarUsuarioSiNoExiste(db, "admin", "admin123", "administrador");
         insertarUsuarioSiNoExiste(db, "usuario", "usuario123", "normal");
 
-        // ✅ Cambiar entre login y registro
+        // Cambiar entre login y registro
         cbRegistrar.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 etConfirmarPassword.setVisibility(EditText.VISIBLE);
@@ -50,7 +53,7 @@ public class Inicio extends AppCompatActivity {
             }
         });
 
-        // ✅ Botón de acción
+        // Botón de acción
         btnAccion.setOnClickListener(view -> {
             String usuario = etUsuario.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
@@ -68,28 +71,31 @@ public class Inicio extends AppCompatActivity {
                     return;
                 }
                 registrarUsuario(db, usuario, password);
+                guardarUsuarioEnPrefs(usuario, "normal");
             } else {
                 // Login
                 String tipoUsuario = verificarUsuario(db, usuario, password);
                 if (tipoUsuario == null) {
                     Toast.makeText(Inicio.this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Inicio.this, "Bienvenido " + tipoUsuario, Toast.LENGTH_SHORT).show();
+                    guardarUsuarioEnPrefs(usuario, tipoUsuario);
+                    Toast.makeText(Inicio.this, "Bienvenido " + usuario, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Inicio.this, MainActivity.class);
                     intent.putExtra("tipo_usuario", tipoUsuario);
+                    intent.putExtra("nombre_usuario", usuario);
                     startActivity(intent);
                     finish();
                 }
             }
         });
+    }
 
-        // ✅ Detectar deslizar hacia arriba para ir al login
-        scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener)
-                (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                    if (scrollY > 200) { // Deslizó hacia abajo
-                        scrollView.post(() -> scrollView.smoothScrollTo(0, v.getBottom()));
-                    }
-                });
+    private void guardarUsuarioEnPrefs(String nombre, String tipo) {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_NOMBRE, nombre);
+        editor.putString(KEY_TIPO, tipo);
+        editor.apply();
     }
 
     private void insertarUsuarioSiNoExiste(SQLiteDatabase db, String usuario, String password, String tipo) {
