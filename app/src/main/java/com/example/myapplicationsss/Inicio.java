@@ -91,7 +91,7 @@ public class Inicio extends AppCompatActivity {
                     guardarUsuarioEnPrefs(usuario, tipoUsuario);
                     Toast.makeText(Inicio.this, "Bienvenido " + usuario, Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(Inicio.this, UsuarioActivity.class);
+                    Intent intent = new Intent(Inicio.this, MainActivity.class);
                     intent.putExtra("tipo_usuario", tipoUsuario);
                     intent.putExtra("nombre_usuario", usuario);
                     startActivity(intent);
