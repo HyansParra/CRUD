@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout principal que usa ConstraintLayout como contenedor -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,6 +9,7 @@
     android:layout_height="match_parent"
     android:background="#F5EFE6">
 
+    <!-- Texto principal con el nombre de la aplicación -->
     <TextView
         android:id="@+id/tvLogo"
         android:layout_width="wrap_content"
@@ -21,6 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Mensaje de bienvenida debajo del título -->
     <TextView
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
@@ -33,6 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Imagen central (logo principal de la app) -->
     <ImageView
         android:id="@+id/ivLogoPrincipal"
         android:layout_width="250dp"
@@ -44,6 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Texto que muestra los puntos acumulados por el usuario -->
     <TextView
         android:id="@+id/tvPuntos"
         android:layout_width="wrap_content"
@@ -56,6 +61,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Barra de navegación inferior con 3 secciones -->
     <LinearLayout
         android:id="@+id/bottomNavBar"
         android:layout_width="0dp"
@@ -68,6 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:weightSum="3">
 
+        <!-- Sección 1: Catálogo -->
         <LinearLayout
             android:id="@+id/navCoffee"
             android:layout_width="0dp"
@@ -78,12 +85,14 @@
             android:clickable="true"
             android:focusable="true">
 
+            <!-- Ícono del catálogo -->
             <ImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@android:drawable/ic_menu_compass"
                 android:contentDescription="Catálogo"/>
 
+            <!-- Texto debajo del ícono -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,6 +102,7 @@
                 android:layout_marginTop="4dp"/>
         </LinearLayout>
 
+        <!-- Sección 2: QR -->
         <LinearLayout
             android:id="@+id/navQR"
             android:layout_width="0dp"
@@ -103,12 +113,14 @@
             android:clickable="true"
             android:focusable="true">
 
+            <!-- Ícono para la sección de QR -->
             <ImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@android:drawable/ic_menu_camera"
                 android:contentDescription="QR"/>
 
+            <!-- Texto debajo del ícono -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,6 +130,7 @@
                 android:layout_marginTop="4dp"/>
         </LinearLayout>
 
+        <!-- Sección 3: Usuario -->
         <LinearLayout
             android:id="@+id/navUser"
             android:layout_width="0dp"
@@ -128,12 +141,14 @@
             android:clickable="true"
             android:focusable="true">
 
+            <!-- Ícono de usuario -->
             <ImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@android:drawable/ic_menu_myplaces"
                 android:contentDescription="Usuario"/>
 
+            <!-- Texto debajo del ícono -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
