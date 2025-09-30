@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SqlBasedeDatos extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "cafeteria.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public SqlBasedeDatos(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -45,12 +45,16 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
         // Tabla Clientes
         db.execSQL("CREATE TABLE Clientes (" +
                 "idCliente INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "idUsuario INTEGER UNIQUE, "+
                 "nombre TEXT NOT NULL, " +
                 "email TEXT NOT NULL UNIQUE, " +
                 "telefono TEXT, " +
                 "fecha_nac TEXT, " +
                 "estado TEXT DEFAULT 'activo', " +
-                "creado_en TEXT NOT NULL);");
+                "puntos INTEGER DEFAULT 1000," +
+                "creado_en TEXT NOT NULL," +
+                "FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE" +
+                ");");
 
         // Tabla Sucursales
         db.execSQL("CREATE TABLE Sucursales (" +

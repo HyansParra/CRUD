@@ -47,6 +47,7 @@ public class Inicio extends AppCompatActivity {
         // Insertar usuarios predeterminados
         insertarUsuarioSiNoExiste(db, "admin", "admin123", "administrador");
         insertarUsuarioSiNoExiste(db, "usuario", "usuario123", "normal");
+        insertarUsuarioSiNoExiste(db, "rodrigo", "123", "normal"); // <-- tu cuenta
 
         // Cambiar entre login y registro
         cbRegistrar.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -88,12 +89,21 @@ public class Inicio extends AppCompatActivity {
                 if (tipoUsuario == null) {
                     Toast.makeText(Inicio.this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show();
                 } else {
+                    // Obtener idUsuario del usuario logueado
+                    int idUsuario = obtenerIdUsuario(db, usuario);
+
+                    // Verificar si existe cliente asociado, si no crear
+                    if (!existeCliente(db, idUsuario)) {
+                        crearCliente(db, idUsuario, usuario);
+                    }
+
                     guardarUsuarioEnPrefs(usuario, tipoUsuario);
                     Toast.makeText(Inicio.this, "Bienvenido " + usuario, Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(Inicio.this, MainActivity.class);
                     intent.putExtra("tipo_usuario", tipoUsuario);
                     intent.putExtra("nombre_usuario", usuario);
+                    intent.putExtra("id_usuario", idUsuario); // <-- nuevo
                     startActivity(intent);
                     finish();
                 }
@@ -125,7 +135,10 @@ public class Inicio extends AppCompatActivity {
             values.put("password", password);
             values.put("tipo", tipo);
 
-            db.insert("Usuarios", null, values);
+            long idUsuario = db.insert("Usuarios", null, values); // <-- ID generado
+
+            // Crear cliente asociado
+            crearCliente(db, idUsuario, usuario);
         }
 
         cursor.close();
@@ -148,7 +161,11 @@ public class Inicio extends AppCompatActivity {
             values.put("password", password);
             values.put("tipo", "normal");
 
-            db.insert("Usuarios", null, values);
+            long idUsuario = db.insert("Usuarios", null, values); // <-- ID generado
+
+            // Crear cliente asociado
+            crearCliente(db, idUsuario, usuario);
+
             Toast.makeText(this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show();
         }
 
@@ -170,5 +187,37 @@ public class Inicio extends AppCompatActivity {
 
         cursor.close();
         return null;
+    }
+
+    // --- Obtener idUsuario a partir del nombre ---
+    private int obtenerIdUsuario(SQLiteDatabase db, String nombre) {
+        int id = 0;
+        Cursor cursor = db.rawQuery("SELECT idUsuario FROM Usuarios WHERE nombre=?", new String[]{nombre});
+        if (cursor.moveToFirst()) {
+            id = cursor.getInt(0);
+        }
+        cursor.close();
+        return id;
+    }
+
+    // --- Verificar si existe cliente ---
+    private boolean existeCliente(SQLiteDatabase db, int idUsuario) {
+        Cursor cursor = db.rawQuery("SELECT * FROM Clientes WHERE idUsuario=?", new String[]{String.valueOf(idUsuario)});
+        boolean existe = cursor.moveToFirst();
+        cursor.close();
+        return existe;
+    }
+
+    // --- Crear cliente ---
+    private void crearCliente(SQLiteDatabase db, long idUsuario, String nombre) {
+        ContentValues clienteValues = new ContentValues();
+        clienteValues.put("idUsuario", idUsuario);
+        clienteValues.put("nombre", nombre);
+        clienteValues.put("email", nombre + "@cafefidelidad.com");
+        clienteValues.put("puntos", 0);
+        clienteValues.put("creado_en", String.valueOf(System.currentTimeMillis()));
+        db.insert("Clientes", null, clienteValues);
+
+
     }
 }
