@@ -11,29 +11,46 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplicationsss">
-
+        <activity
+            android:name=".item_producto"
+            android:exported="false" />
         <!-- Actividad de Inicio (launcher) -->
         <activity
             android:name=".Inicio"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Actividades principales -->
-        <activity android:name=".MainActivity" android:exported="true" />
-        <activity android:name=".UsuarioActivity" android:exported="true" />
-        <activity android:name=".UsuarioCrudActivity" android:exported="true" />
-        <activity android:name=".CatalogoActivity" android:exported="true" />
-        <activity android:name=".CatalogoCrudActivity" android:exported="true" />
-        <activity android:name=".QRActivity" android:exported="true" />
-        <activity android:name=".ReglasActivity" android:exported="true" />
-        <activity android:name=".BeneficiosActivity" android:exported="true" />
-        <activity android:name=".MiQRActivity" android:exported="true" />
-
-
+        </activity> <!-- Actividades principales -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".UsuarioActivity"
+            android:exported="true" />
+        <activity
+            android:name=".UsuarioCrudActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CatalogoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CatalogoCrudActivity"
+            android:exported="true" />
+        <activity
+            android:name=".QRActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ReglasActivity"
+            android:exported="true" />
+        <activity
+            android:name=".BeneficiosActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MiQRActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

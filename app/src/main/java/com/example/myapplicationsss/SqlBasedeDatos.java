@@ -1,8 +1,12 @@
 package com.example.myapplicationsss;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 public class SqlBasedeDatos extends SQLiteOpenHelper {
 
@@ -13,24 +17,19 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // ================================
-    // Configuración antes de crear la DB
-    // ================================
     @Override
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);
-        db.setForeignKeyConstraintsEnabled(true); // Activa llaves foráneas
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
-    // ================================
-    // Crear la base de datos
-    // ================================
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Activar llaves foráneas por compatibilidad
         db.execSQL("PRAGMA foreign_keys=ON;");
 
-        // Tabla Usuarios (para login)
+        // ==========================
+        // Tablas existentes
+        // ==========================
         db.execSQL("CREATE TABLE Usuarios (" +
                 "idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nombre TEXT NOT NULL UNIQUE, " +
@@ -42,21 +41,19 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
                 "password TEXT NOT NULL, " +
                 "tipo TEXT NOT NULL DEFAULT 'normal');");
 
-        // Tabla Clientes
         db.execSQL("CREATE TABLE Clientes (" +
                 "idCliente INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "idUsuario INTEGER UNIQUE, "+
+                "idUsuario INTEGER UNIQUE, " +
                 "nombre TEXT NOT NULL, " +
                 "email TEXT NOT NULL UNIQUE, " +
                 "telefono TEXT, " +
                 "fecha_nac TEXT, " +
                 "estado TEXT DEFAULT 'activo', " +
-                "puntos INTEGER DEFAULT 1000," +
-                "creado_en TEXT NOT NULL," +
+                "puntos INTEGER DEFAULT 1000, " +
+                "creado_en TEXT NOT NULL, " +
                 "FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE" +
                 ");");
 
-        // Tabla Sucursales
         db.execSQL("CREATE TABLE Sucursales (" +
                 "idSucursal INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nombre TEXT NOT NULL, " +
@@ -66,7 +63,6 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
                 "horario TEXT, " +
                 "estado TEXT DEFAULT 'activa');");
 
-        // Tabla Productos
         db.execSQL("CREATE TABLE Productos (" +
                 "idProducto INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nombre TEXT NOT NULL, " +
@@ -74,13 +70,11 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
                 "precio NUMERIC NOT NULL CHECK(precio > 0), " +
                 "estado TEXT DEFAULT 'activo');");
 
-        // Tabla Regla
         db.execSQL("CREATE TABLE Regla (" +
                 "id_regla INTEGER PRIMARY KEY, " +
                 "descripcion TEXT NOT NULL, " +
                 "expresion TEXT NOT NULL);");
 
-        // Tabla Beneficios
         db.execSQL("CREATE TABLE Beneficios (" +
                 "idBeneficio INTEGER PRIMARY KEY, " +
                 "regla INTEGER NOT NULL, " +
@@ -96,7 +90,6 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
                 "FOREIGN KEY (producto_premio) REFERENCES Productos(idProducto), " +
                 "CHECK (date(vigencia_fin) >= date(vigencia_ini)));");
 
-        // Tabla Visita
         db.execSQL("CREATE TABLE Visita (" +
                 "id_visita INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "id_cliente INTEGER NOT NULL, " +
@@ -108,7 +101,6 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
                 "FOREIGN KEY(id_cliente) REFERENCES Clientes(idCliente), " +
                 "FOREIGN KEY(id_sucursal) REFERENCES Sucursales(idSucursal));");
 
-        // Tabla Canje
         db.execSQL("CREATE TABLE Canje (" +
                 "id_canje INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "id_cliente INTEGER NOT NULL, " +
@@ -121,9 +113,9 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
                 "FOREIGN KEY(id_beneficio) REFERENCES Beneficios(idBeneficio), " +
                 "FOREIGN KEY(id_sucursal) REFERENCES Sucursales(idSucursal));");
 
-        // ================================
-        // Índices sugeridos
-        // ================================
+        // ==========================
+        // Índices
+        // ==========================
         db.execSQL("CREATE INDEX ix_visita_cliente_fecha ON Visita(id_cliente, fecha_hora);");
         db.execSQL("CREATE INDEX ix_visita_sucursal_fecha ON Visita(id_sucursal, fecha_hora);");
         db.execSQL("CREATE INDEX ix_canje_cliente_fecha ON Canje(id_cliente, fecha_hora);");
@@ -131,9 +123,6 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
         db.execSQL("CREATE INDEX ix_beneficio_estado_vig ON Beneficios(estado, vigencia_ini, vigencia_fin);");
     }
 
-    // ================================
-    // Actualizar base de datos
-    // ================================
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS Canje");
@@ -143,7 +132,77 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Productos");
         db.execSQL("DROP TABLE IF EXISTS Sucursales");
         db.execSQL("DROP TABLE IF EXISTS Clientes");
-        db.execSQL("DROP TABLE IF EXISTS Usuarios"); // también borra Usuarios al actualizar
+        db.execSQL("DROP TABLE IF EXISTS Usuarios");
         onCreate(db);
+    }
+
+    // ================================
+    // MÉTODO: Insertar producto
+    // ================================
+    public long insertarProducto(String nombre, String categoria, double precio) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("nombre", nombre);
+        cv.put("categoria", categoria);
+        cv.put("precio", precio);
+        cv.put("estado", "activo");
+
+        long id = db.insert("Productos", null, cv);
+        db.close();
+        return id;
+    }
+
+    // ================================
+    // MÉTODO: Leer productos activos
+    // ================================
+    public ArrayList<Producto> obtenerProductos() {
+        ArrayList<Producto> lista = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT idProducto, nombre, categoria, precio, estado FROM Productos WHERE estado='activo'", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String nombre = cursor.getString(1);
+                String categoria = cursor.getString(2);
+                double precio = cursor.getDouble(3);
+                String estado = cursor.getString(4);
+
+                lista.add(new Producto(id, nombre, categoria, precio, estado));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return lista;
+    }
+
+    // ================================
+    // MÉTODO: Eliminar producto por ID
+    // ================================
+    public boolean eliminarProducto(int idProducto) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int filas = db.delete("Productos", "idProducto=?", new String[]{String.valueOf(idProducto)});
+        db.close();
+        return filas > 0;
+    }
+
+    // ================================
+    // CLASE INTERNA: Producto
+    // ================================
+    public static class Producto {
+        public int id;
+        public String nombre;
+        public String categoria;
+        public double precio;
+        public String estado;
+
+        public Producto(int id, String nombre, String categoria, double precio, String estado) {
+            this.id = id;
+            this.nombre = nombre;
+            this.categoria = categoria;
+            this.precio = precio;
+            this.estado = estado;
+        }
     }
 }

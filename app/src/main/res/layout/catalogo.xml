@@ -9,7 +9,7 @@
     android:background="#F5EFE6"
     tools:context=".CatalogoActivity">
 
-    <!-- Botón volver (arriba izquierda) -->
+    <!-- Botón volver -->
     <Button
         android:id="@+id/btnVolver"
         android:layout_width="wrap_content"
@@ -22,26 +22,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Botón CRUD (arriba derecha) -->
-
-    <!-- Título -->
-
+    <!-- Botón CRUD -->
     <Button
         android:id="@+id/btnCatalogoCRUD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="28dp"
-        android:layout_marginBottom="16dp"
         android:backgroundTint="#6F4E37"
         android:text="CRUD"
         android:textColor="#FFFFFF"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/tvTitulo"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Título -->
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="0dp"
@@ -56,7 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnVolver" />
 
-    <!-- Contenido con scroll -->
+    <!-- Contenedor dinámico para productos -->
     <ScrollView
         android:id="@+id/scrollMain"
         android:layout_width="0dp"
@@ -67,219 +61,11 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/llProductos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
-
-            <!-- Café Espresso -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/cafe_placeholder"
-                        android:contentDescription="Café Espresso"
-                        android:scaleType="centerCrop"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Café Espresso"
-                            android:textStyle="bold"
-                            android:textSize="18sp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Intenso y fuerte, ideal para amantes del café puro."
-                            android:textColor="#8D6E63"
-                            android:layout_marginTop="4dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$1.500"
-                            android:textColor="#000000"
-                            android:textStyle="bold"
-                            android:layout_marginTop="6dp"/>
-
-                        <RatingBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:numStars="5"
-                            android:rating="4.5"
-                            android:stepSize="0.5"
-                            android:layout_marginTop="4dp"/>
-
-                        <Button
-                            android:id="@+id/btnAddEspresso"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Agregar al carrito"
-                            android:backgroundTint="#6F4E37"
-                            android:textColor="#FFFFFF"
-                            android:layout_marginTop="6dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Café Latte -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/cafe_placeholder"
-                        android:contentDescription="Café Latte"
-                        android:scaleType="centerCrop"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Café Latte"
-                            android:textStyle="bold"
-                            android:textSize="18sp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Suave y cremoso, con el equilibrio perfecto de leche y café."
-                            android:textColor="#8D6E63"
-                            android:layout_marginTop="4dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$2.000"
-                            android:textColor="#000000"
-                            android:textStyle="bold"
-                            android:layout_marginTop="6dp"/>
-
-                        <RatingBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:numStars="5"
-                            android:rating="4.0"
-                            android:stepSize="0.5"
-                            android:layout_marginTop="4dp"/>
-
-                        <Button
-                            android:id="@+id/btnAddLatte"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Agregar al carrito"
-                            android:backgroundTint="#6F4E37"
-                            android:textColor="#FFFFFF"
-                            android:layout_marginTop="6dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Cappuccino -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/cafe_placeholder"
-                        android:contentDescription="Cappuccino"
-                        android:scaleType="centerCrop"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Cappuccino"
-                            android:textStyle="bold"
-                            android:textSize="18sp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Espuma cremosa y sabor equilibrado, un clásico italiano."
-                            android:textColor="#8D6E63"
-                            android:layout_marginTop="4dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$2.200"
-                            android:textColor="#000000"
-                            android:textStyle="bold"
-                            android:layout_marginTop="6dp"/>
-
-                        <RatingBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:numStars="5"
-                            android:rating="4.7"
-                            android:stepSize="0.5"
-                            android:layout_marginTop="4dp"/>
-
-                        <Button
-                            android:id="@+id/btnAddCappuccino"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Agregar al carrito"
-                            android:backgroundTint="#6F4E37"
-                            android:textColor="#FFFFFF"
-                            android:layout_marginTop="6dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
+            android:padding="16dp"/>
     </ScrollView>
 
     <!-- Barra de navegación inferior -->
@@ -302,13 +88,11 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_compass"
                 android:contentDescription="Coffee" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -324,13 +108,11 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_camera"
                 android:contentDescription="QR" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -346,13 +128,11 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_myplaces"
                 android:contentDescription="User" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -365,3 +145,4 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

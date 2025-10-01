@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="16dp"/>
 
-    <!-- ScrollView con contenido -->
+    <!-- ScrollView con todo el contenido -->
     <ScrollView
         android:id="@+id/scrollMain"
         android:layout_width="0dp"
@@ -36,7 +36,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Título -->
+            <!-- Título del CRUD -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                 android:textColor="#4E342E"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Card con formulario -->
+            <!-- Card con formulario de entrada (Agregar/Editar) -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,6 +61,7 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
+                    <!-- Nombre del café -->
                     <EditText
                         android:id="@+id/etNombre"
                         android:layout_width="match_parent"
@@ -70,6 +71,7 @@
                         android:padding="8dp"
                         android:background="@android:drawable/edit_text"/>
 
+                    <!-- Descripción -->
                     <EditText
                         android:id="@+id/etDescripcion"
                         android:layout_width="match_parent"
@@ -80,6 +82,7 @@
                         android:layout_marginTop="8dp"
                         android:background="@android:drawable/edit_text"/>
 
+                    <!-- Precio -->
                     <EditText
                         android:id="@+id/etPrecio"
                         android:layout_width="match_parent"
@@ -90,16 +93,9 @@
                         android:layout_marginTop="8dp"
                         android:background="@android:drawable/edit_text"/>
 
-                    <EditText
-                        android:id="@+id/etImagenUrl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="URL de la imagen del café"
-                        android:inputType="textUri"
-                        android:padding="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@android:drawable/edit_text"/>
 
+
+                    <!-- Botones de acción -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -146,72 +142,15 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Ejemplo de café agregado -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ejemplo de café agregado:"
-                android:textStyle="bold"
-                android:textColor="#4E342E"
-                android:layout_marginBottom="8dp"/>
-
-            <androidx.cardview.widget.CardView
+            <!-- Contenedor dinámico para productos agregados -->
+            <!-- CAMBIO IMPORTANTE: antes estaba un ejemplo fijo, ahora este LinearLayout servirá para mostrar los productos de la base de datos -->
+            <LinearLayout
+                android:id="@+id/llProductos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:background="#FFFFFF"
-                android:elevation="4dp"
-                app:cardCornerRadius="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:contentDescription="Imagen del café"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/cafe_placeholder" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Capuccino Clásico"
-                            android:textColor="#3E2723"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Cremoso, con espuma y sabor equilibrado."
-                            android:textColor="#6D4C41"
-                            android:textSize="14sp" />
-
-                        <RatingBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:isIndicator="true"
-                            android:numStars="5"
-                            android:rating="4"
-                            android:stepSize="1.0" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
+                android:orientation="vertical"
+                android:paddingTop="16dp"/>
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
