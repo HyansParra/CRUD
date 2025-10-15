@@ -11,10 +11,18 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplicationsss">
+
         <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
             android:name=".item_producto"
-            android:exported="false" />
-        <!-- Actividad de Inicio (launcher) -->
+            android:exported="false" /> <!-- Actividad de Inicio (launcher) -->
         <activity
             android:name=".Inicio"
             android:exported="true">
