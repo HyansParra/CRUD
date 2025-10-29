@@ -10,7 +10,7 @@ public class BeneficiosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.beneficios); // Asegúrate que el archivo se llame beneficios.xml
+        setContentView(R.layout.beneficios);
 
         // Botón volver
         Button btnVolver = findViewById(R.id.btnVolver);

@@ -23,9 +23,9 @@ public class CatalogoCrudActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.catalogo_crud);
 
-        // ===============================
+
         // Referencias a los EditText y Buttons
-        // ===============================
+
         etNombre = findViewById(R.id.etNombre);
         etDescripcion = findViewById(R.id.etDescripcion);
         etPrecio = findViewById(R.id.etPrecio);
@@ -37,24 +37,24 @@ public class CatalogoCrudActivity extends AppCompatActivity {
 
         llProductos = findViewById(R.id.llProductos);
 
-        // ===============================
+
         // Inicializar la base de datos
-        // ===============================
+
         db = new SqlBasedeDatos(this);
 
-        // ===============================
+
         // Cargar productos existentes
-        // ===============================
+
         cargarProductos();
 
-        // ===============================
+
         // Botón volver
-        // ===============================
+
         btnVolver.setOnClickListener(v -> finish());
 
-        // ===============================
+
         // Botón agregar
-        // ===============================
+
         btnAgregar.setOnClickListener(v -> {
             String nombre = etNombre.getText().toString().trim();
             String desc = etDescripcion.getText().toString().trim();
@@ -73,9 +73,9 @@ public class CatalogoCrudActivity extends AppCompatActivity {
                 return;
             }
 
-            // ===============================
+
             // Insertar en la base de datos
-            // ===============================
+
             long id = db.insertarProducto(nombre, "Café", precio); // categoría fija "Café"
             if (id > 0) {
                 Toast.makeText(this, "Café agregado: " + nombre, Toast.LENGTH_SHORT).show();
@@ -88,9 +88,9 @@ public class CatalogoCrudActivity extends AppCompatActivity {
             }
         });
 
-        // ===============================
+
         // Botones editar y eliminar generales
-        // ===============================
+
         btnEditar.setOnClickListener(v ->
                 Toast.makeText(this, "Función editar aún no implementada", Toast.LENGTH_SHORT).show()
         );
@@ -99,9 +99,9 @@ public class CatalogoCrudActivity extends AppCompatActivity {
         );
     }
 
-    // ===============================
+
     // Método para cargar productos desde la DB y mostrarlos
-    // ===============================
+
     private void cargarProductos() {
         llProductos.removeAllViews(); // Limpiar antes de cargar
 

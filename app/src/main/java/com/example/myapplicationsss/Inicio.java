@@ -20,10 +20,10 @@ public class Inicio extends AppCompatActivity {
     private Button btnAccion;
     private CheckBox cbRegistrar;
 
-    // --- DB Helper ---
+
     private SqlBasedeDatos dbHelper;
 
-    // --- SharedPreferences ---
+
     private static final String PREFS_NAME = "cafefidelidad_prefs";
     private static final String KEY_NOMBRE = "logged_name";
     private static final String KEY_TIPO = "logged_tipo";
@@ -47,7 +47,7 @@ public class Inicio extends AppCompatActivity {
         // Insertar usuarios predeterminados
         insertarUsuarioSiNoExiste(db, "admin", "admin123", "administrador");
         insertarUsuarioSiNoExiste(db, "usuario", "usuario123", "normal");
-        insertarUsuarioSiNoExiste(db, "rodrigo", "123", "normal"); // <-- tu cuenta
+        insertarUsuarioSiNoExiste(db, "rodrigo", "123", "normal");
 
         // Cambiar entre login y registro
         cbRegistrar.setOnCheckedChangeListener((buttonView, isChecked) -> {

@@ -24,54 +24,54 @@ public class CatalogoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.catalogo); // tu XML adaptado
+        setContentView(R.layout.catalogo);
 
-        // ===============================
+
         // Inicializar botones existentes
-        // ===============================
+
         btnCatalogoCRUD = findViewById(R.id.btnCatalogoCRUD);
         btnVolver = findViewById(R.id.btnVolver);
 
-        // ===============================
+
         // Contenedor de productos
-        // ===============================
+
         linearProductos = findViewById(R.id.llProductos);
 
-        // ===============================
+
         // Base de datos
-        // ===============================
+
         db = new SqlBasedeDatos(this);
 
-        // ===============================
+
         // Recibir tipo de usuario
-        // ===============================
+
         tipoUsuario = getIntent().getStringExtra("tipo_usuario");
 
-        // ===============================
+
         // Mostrar u ocultar botón CRUD solo si es admin
-        // ===============================
+
         if (tipoUsuario != null && tipoUsuario.equalsIgnoreCase("admin")) {
             btnCatalogoCRUD.setVisibility(Button.VISIBLE);
         } else {
             btnCatalogoCRUD.setVisibility(Button.VISIBLE);
         }
 
-        // ===============================
+
         // Botón volver
-        // ===============================
+
         btnVolver.setOnClickListener(v -> finish());
 
-        // ===============================
+
         // Botón CRUD
-        // ===============================
+
         btnCatalogoCRUD.setOnClickListener(v -> {
             Intent intent = new Intent(CatalogoActivity.this, CatalogoCrudActivity.class);
             startActivity(intent);
         });
 
-        // ===============================
+
         // Barra de navegación inferior
-        // ===============================
+
         LinearLayout navCoffee = findViewById(R.id.navCoffee);
         LinearLayout navQR = findViewById(R.id.navQR);
         LinearLayout navUser = findViewById(R.id.navUser);
@@ -92,9 +92,9 @@ public class CatalogoActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // ===============================
+
         // Cargar productos dinámicamente
-        // ===============================
+
         cargarProductos();
     }
 

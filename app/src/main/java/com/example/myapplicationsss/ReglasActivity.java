@@ -10,7 +10,7 @@ public class ReglasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.reglas); // Asegúrate que el XML se llama reglas.xml
+        setContentView(R.layout.reglas); //reglas.xml
 
         // Botón volver
         Button btnVolver = findViewById(R.id.btnVolver);
