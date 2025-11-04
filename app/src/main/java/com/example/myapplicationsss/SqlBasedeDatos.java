@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class SqlBasedeDatos extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "cafeteria.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public SqlBasedeDatos(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -114,6 +114,20 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
                 "FOREIGN KEY(id_sucursal) REFERENCES Sucursales(idSucursal));");
 
         // ==========================
+        // Nueva Tabla: Reseñas
+        // ==========================
+        db.execSQL("CREATE TABLE Reseñas (" +
+                "idReseña INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "idUsuario INTEGER NOT NULL, " +
+                "idProducto INTEGER NOT NULL, " +
+                "calificacion REAL NOT NULL CHECK(calificacion >= 0 AND calificacion <= 5), " +
+                "comentario TEXT, " +
+                "fecha TEXT NOT NULL, " +
+                "FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE, " +
+                "FOREIGN KEY (idProducto) REFERENCES Productos(idProducto) ON DELETE CASCADE" +
+                ");");
+
+        // ==========================
         // Índices
         // ==========================
         db.execSQL("CREATE INDEX ix_visita_cliente_fecha ON Visita(id_cliente, fecha_hora);");
@@ -133,6 +147,7 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Sucursales");
         db.execSQL("DROP TABLE IF EXISTS Clientes");
         db.execSQL("DROP TABLE IF EXISTS Usuarios");
+        db.execSQL("DROP TABLE IF EXISTS Reseñas");
         onCreate(db);
     }
 
@@ -186,6 +201,75 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
         db.close();
         return filas > 0;
     }
+    // ================================
+// MÉTODO: Insertar Reseña
+// ================================
+    public long insertarReseña(int idUsuario, int idProducto, float calificacion, String comentario) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("idUsuario", idUsuario);
+        cv.put("idProducto", idProducto);
+        cv.put("calificacion", calificacion);
+        cv.put("comentario", comentario);
+        cv.put("fecha", String.valueOf(System.currentTimeMillis())); // Fecha actual
+
+        long id = db.insert("Reseñas", null, cv);
+        db.close();
+        return id;
+    }
+
+    // ================================
+// MÉTODO: Leer Reseñas por Usuario
+// ================================
+    public ArrayList<Reseña> obtenerReseñasPorUsuario(int idUsuario) {
+        ArrayList<Reseña> lista = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT idReseña, idUsuario, idProducto, calificacion, comentario, fecha FROM Reseñas WHERE idUsuario = ?",
+                new String[]{String.valueOf(idUsuario)}
+        );
+
+        if (cursor.moveToFirst()) {
+            do {
+                lista.add(new Reseña(
+                        cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getInt(2),
+                        cursor.getFloat(3),
+                        cursor.getString(4),
+                        cursor.getString(5)
+                ));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return lista;
+    }
+
+    // ================================
+    // MÉTODO: Actualizar Reseña
+    // ================================
+    public boolean actualizarReseña(int idReseña, float calificacion, String comentario) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("calificacion", calificacion);
+        cv.put("comentario", comentario);
+        cv.put("fecha", String.valueOf(System.currentTimeMillis()));
+
+        int filas = db.update("Reseñas", cv, "idReseña = ?", new String[]{String.valueOf(idReseña)});
+        db.close();
+        return filas > 0;
+    }
+
+    // ================================
+    // MÉTODO: Eliminar Reseña
+    // ================================
+    public boolean eliminarReseña(int idReseña) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int filas = db.delete("Reseñas", "idReseña = ?", new String[]{String.valueOf(idReseña)});
+        db.close();
+        return filas > 0;
+    }
 
     // ================================
     // CLASE INTERNA: Producto
@@ -203,6 +287,28 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
             this.categoria = categoria;
             this.precio = precio;
             this.estado = estado;
+        }
+    }
+
+    // ================================
+    // CLASE INTERNA: Reseña
+    // ================================
+    public static class Reseña {
+        public int id;
+        public int idUsuario;
+        public int idProducto;
+        public float calificacion;
+        public String comentario;
+        public String fecha;
+
+        // Constructor
+        public Reseña(int id, int idUsuario, int idProducto, float calificacion, String comentario, String fecha) {
+            this.id = id;
+            this.idUsuario = idUsuario;
+            this.idProducto = idProducto;
+            this.calificacion = calificacion;
+            this.comentario = comentario;
+            this.fecha = fecha;
         }
     }
 }

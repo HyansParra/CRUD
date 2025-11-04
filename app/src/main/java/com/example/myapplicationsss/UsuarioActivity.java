@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.button.MaterialButton;
+// AÑADIDO:
+import com.google.android.material.card.MaterialCardView;
 
 public class UsuarioActivity extends AppCompatActivity {
 
@@ -19,9 +21,15 @@ public class UsuarioActivity extends AppCompatActivity {
     private LinearLayout layoutExtras;
     private TextView tvUserName, tvUserSubtitle;
 
+    // AÑADIDO:
+    private MaterialCardView cardReseñas;
+    private int idUsuarioLogueado;
+
     private static final String PREFS_NAME = "cafefidelidad_prefs";
     private static final String KEY_NOMBRE = "logged_name";
     private static final String KEY_TIPO = "logged_tipo";
+    // AÑADIDO:
+    private static final String KEY_ID = "logged_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,8 @@ public class UsuarioActivity extends AppCompatActivity {
         layoutExtras = findViewById(R.id.layoutExtras);
         tvUserName = findViewById(R.id.tvUserName);
         tvUserSubtitle = findViewById(R.id.tvUserSubtitle);
+        // AÑADIDO:
+        cardReseñas = findViewById(R.id.cardReseñas);
 
         // Intent extras
         tipoUsuario = getIntent().getStringExtra("tipo_usuario");
@@ -45,6 +55,8 @@ public class UsuarioActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String nombrePrefs = prefs.getString(KEY_NOMBRE, null);
         String tipoPrefs = prefs.getString(KEY_TIPO, null);
+        // AÑADIDO:
+        idUsuarioLogueado = prefs.getInt(KEY_ID, 0);
 
         String nombreFinal = (nombreDesdeIntent != null && !nombreDesdeIntent.isEmpty())
                 ? nombreDesdeIntent
@@ -92,6 +104,24 @@ public class UsuarioActivity extends AppCompatActivity {
 
         // Volver
         btnVolver.setOnClickListener(v -> finish());
+
+
+        // ===================================
+        // AÑADIDO: Listener para "Mis Reseñas"
+        // ===================================
+        cardReseñas.setOnClickListener(v -> {
+            if (idUsuarioLogueado == 0) {
+                Toast.makeText(this, "Error al cargar ID de usuario", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Intent intent = new Intent(UsuarioActivity.this, ResenaCrudActivity.class);
+            intent.putExtra("id_usuario", idUsuarioLogueado);
+            startActivity(intent);
+        });
+        // ===================================
+        // FIN DE BLOQUE AÑADIDO
+        // ===================================
+
 
         // Barra inferior
         LinearLayout navCoffee = findViewById(R.id.navCoffee);

@@ -27,6 +27,8 @@ public class Inicio extends AppCompatActivity {
     private static final String PREFS_NAME = "cafefidelidad_prefs";
     private static final String KEY_NOMBRE = "logged_name";
     private static final String KEY_TIPO = "logged_tipo";
+    // AÑADIDO:
+    private static final String KEY_ID = "logged_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +82,9 @@ public class Inicio extends AppCompatActivity {
                 }
 
                 registrarUsuario(db, usuario, password);
-                guardarUsuarioEnPrefs(usuario, "normal");
+                // MODIFICADO: Guardar también el ID
+                int idNuevoUsuario = obtenerIdUsuario(db, usuario);
+                guardarUsuarioEnPrefs(usuario, "normal", idNuevoUsuario);
 
             } else {
                 // --- Login ---
@@ -97,7 +101,8 @@ public class Inicio extends AppCompatActivity {
                         crearCliente(db, idUsuario, usuario);
                     }
 
-                    guardarUsuarioEnPrefs(usuario, tipoUsuario);
+                    // MODIFICADO: Guardar también el ID
+                    guardarUsuarioEnPrefs(usuario, tipoUsuario, idUsuario);
                     Toast.makeText(Inicio.this, "Bienvenido " + usuario, Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(Inicio.this, MainActivity.class);
@@ -111,12 +116,13 @@ public class Inicio extends AppCompatActivity {
         });
     }
 
-    // --- Guardar usuario en SharedPreferences ---
-    private void guardarUsuarioEnPrefs(String nombre, String tipo) {
+    // --- MODIFICADO: Guardar usuario en SharedPreferences (ahora con ID) ---
+    private void guardarUsuarioEnPrefs(String nombre, String tipo, int id) {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(KEY_NOMBRE, nombre);
         editor.putString(KEY_TIPO, tipo);
+        editor.putInt(KEY_ID, id); // <-- AÑADIDO
         editor.apply();
     }
 

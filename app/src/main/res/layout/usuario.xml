@@ -35,7 +35,6 @@
             android:padding="16dp"
             android:layout_marginTop="24dp">
 
-            <!-- Perfil usuario -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,7 +90,6 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
 
-            <!-- Notificaciones -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -126,7 +124,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Privacidad -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -162,7 +159,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Cuenta -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,7 +194,42 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Layout para botones extra admin + MI QR -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardReseñas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/star_on"
+                        android:contentDescription="Reseñas" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="Mis Reseñas" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_media_next"
+                        android:contentDescription="Siguiente" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
             <LinearLayout
                 android:id="@+id/layoutExtras"
                 android:layout_width="match_parent"
@@ -206,7 +237,6 @@
                 android:orientation="vertical"
                 android:layout_marginTop="16dp">
 
-                <!-- 🔹 Nuevo botón MI QR -->
                 <Button
                     android:id="@+id/btnMiQR"
                     android:layout_width="match_parent"
@@ -217,7 +247,6 @@
                     android:layout_marginTop="8dp"/>
             </LinearLayout>
 
-            <!-- Botón de logout -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
@@ -225,7 +254,6 @@
                 android:text="Cerrar sesión"
                 android:layout_marginTop="16dp"/>
 
-            <!-- Botón para abrir CRUD debajo de cerrar sesión -->
             <Button
                 android:id="@+id/btnAbrirCrud"
                 android:layout_width="match_parent"
@@ -247,7 +275,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Barra inferior -->
     <LinearLayout
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
