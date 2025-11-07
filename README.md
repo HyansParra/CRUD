@@ -2,6 +2,14 @@
 
 Este es un proyecto académico que consiste en una aplicación Android para **"CaféFidelidad QR"**, un sistema de fidelización desarrollado para una cafetería. La aplicación fue creada en **Java** usando Android Studio y gestiona todos sus datos a través de una base de datos local **SQLite**.
 
+## Enlace de la Presentación (Evaluación)
+
+Para la evaluación de la Unidad II, puedes encontrar la presentación de PowerPoint (Semana 12) en la siguiente carpeta compartida:
+
+* **[Ver Presentación Final (Semana 12) en OneDrive](https://alumnossantotomas-my.sharepoint.com/:f:/g/personal/h_parra8_alumnos_santotomas_cl/Etzq3a42JZdKnXufIgazC6wBT7-xgn3fJzdqur4I49ExAA?e=gKju8v)**
+
+---
+
 ## Funcionalidades Principales
 
 La aplicación implementa un sistema de autenticación que diferencia claramente entre usuarios **normales** y **administradores**, ofreciendo características específicas para cada rol.

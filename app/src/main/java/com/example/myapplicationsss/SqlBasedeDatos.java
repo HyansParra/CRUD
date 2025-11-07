@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class SqlBasedeDatos extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "cafeteria.db";
+    // Versión 3, esto está correcto
     private static final int DATABASE_VERSION = 3;
 
     public SqlBasedeDatos(Context context) {
@@ -135,6 +136,23 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
         db.execSQL("CREATE INDEX ix_canje_cliente_fecha ON Canje(id_cliente, fecha_hora);");
         db.execSQL("CREATE INDEX ix_canje_beneficio_fecha ON Canje(id_beneficio, fecha_hora);");
         db.execSQL("CREATE INDEX ix_beneficio_estado_vig ON Beneficios(estado, vigencia_ini, vigencia_fin);");
+
+
+        // ================================================================
+        // == INICIO DE BLOQUE AÑADIDO (LA SOLUCIÓN) ==
+        // ================================================================
+        // Insertamos un producto por defecto para que el idProductoPrueba = 1 exista
+        ContentValues productoDefault = new ContentValues();
+        // Usamos .put("nombre", ...) y dejamos que el ID sea autoincremental
+        // La base de datos le asignará el ID 1 automáticamente por ser el primero.
+        productoDefault.put("nombre", "Café de Prueba");
+        productoDefault.put("categoria", "Bebida");
+        productoDefault.put("precio", 1000);
+        productoDefault.put("estado", "activo");
+        db.insert("Productos", null, productoDefault);
+        // ================================================================
+        // == FIN DE BLOQUE AÑADIDO ==
+        // ================================================================
     }
 
     @Override
@@ -147,7 +165,7 @@ public class SqlBasedeDatos extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Sucursales");
         db.execSQL("DROP TABLE IF EXISTS Clientes");
         db.execSQL("DROP TABLE IF EXISTS Usuarios");
-        db.execSQL("DROP TABLE IF EXISTS Reseñas");
+        db.execSQL("DROP TABLE IF EXISTS Reseñas"); // Tu Drop está correcto
         onCreate(db);
     }
 
